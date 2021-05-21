@@ -187,7 +187,7 @@ public class LockPartiallyExternalTree {
             for (double prob: probabilities) {
                 List<TreeWorker> workers = new ArrayList<>();
                 Node root = new Node(Integer.MAX_VALUE, null, null);
-                prepopulate(root, 0, 100);
+                prepopulate(root, 0, 100000);
                 for (int j = 0; j < i; j++) {
                     workers.add(new TreeWorker(root, prob, 5));
                 }
@@ -223,13 +223,9 @@ public class LockPartiallyExternalTree {
     }
 
     private static void prepopulate(Node root, int begin, int end) {
-        if (end - begin > 1) {
-            int med = (end + begin) / 2;
-            if (Math.random() > 0.5) insert(root, med);
-            prepopulate(root, begin, med - 1);
-            prepopulate(root, med + 1, end);
-        } if (end - begin == 1) {
-            if (Math.random() > 0.5) insert(root, begin);
+        Random random = new Random();
+        for (int i = begin; i < end; i=i+2) {
+            insert(root, random.nextInt() % 100000);
         }
     }
 
